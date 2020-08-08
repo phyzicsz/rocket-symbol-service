@@ -16,6 +16,7 @@
 package com.phyzicsz.rocket.symbol.core.sidc;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,10 +56,10 @@ public interface SymbologyConstants {
     /**
      * List containing all recognized MIL-STD-2525 auxiliary equipment codes.
      */
-    final List<String> AUXILIARY_EQUIPMENT_ALL = Arrays.asList(
+    final List<String> AUXILIARY_EQUIPMENT_ALL = Collections.unmodifiableList(Arrays.asList(
             AUXILIARY_EQUIPMENT_TOWED_SONAR_ARRAY_SHORT,
             AUXILIARY_EQUIPMENT_TOWED_SONAR_ARRAY_LONG
-    );
+    ));
 
     /**
      * The MIL-STD-2525 Azimuth modifier field ID.
