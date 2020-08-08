@@ -59,6 +59,7 @@
         
         <!-- maven build dependancies -->
         <google.errorprone.version>2.3.4</google.errorprone.version>
+        <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
         <maven.plugin.compiler.version>3.8.1</maven.plugin.compiler.version>
         <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
         <maven.versions.plugin.version>2.7</maven.versions.plugin.version>
@@ -156,5 +157,34 @@
                 <version>${maven.versions.plugin.version}</version>
             </plugin>
         </plugins>
-    </build>    
+    </build>   
+    
+    <profiles>
+        <profile>
+            <id>coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles> 
 </project>
