@@ -1,12 +1,12 @@
 language: java
 jdk:
-- openjdk11
-  #branches:
-  #only:
-  #- main
-  #- development
+  - openjdk11
 before_install:
   - cd rocket-symbol-service
-#script:
-#	- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=phyzicsz_rocketdis
-
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=phyzicsz_sonartest
+addons:
+  sonarcloud:
+    organization: phyzicsz
+    token:
+      secure: VAPgbgiXcOpQMBpu6ID0Q43Q30dvO/ApLPSBSw7WIOZAOY2YMa5WqIsfOQPCVw0AJ0oW9oelLeHFn5fg7tAyRltV9mcQ4h36hPaF6+Jm+1MyPpFqhAjJDs7gAfwAU8MdXpwmgb0BpMVgQenoeEY4kCbahHwLhMPF1ArREiLnfUUZo453thoRyKmY9Sp1EI+otl3OyImIs4jEUC532AjxFE/efXK6812KSNteu2dXBJkhBMzKZrrrFC8axvZ8JsY8Ll8wFjScp6emfBnmu46didGdQAr0vILEYWHuF7I3krRwc8zzMFff0YB6MKbzXBxD5D9RASVv4zJ81ffxv75vjvdf6JhFatz+Xtf5lpXjssz0GFtthAs8bHlnPf0tcNDmSKTxZKA7iBffxWLeqroTnwKyiMiYiVTPNWzHxtVFKhA+VRbG29Vzaktn8++JadbsdooUNwPY1VUQQ9z2RodmZGP291lnXpaFD9VnRdOZfjEjDuVE/mL2C7KOUkrFmHSQw4f+pyUbNLYCm+QBKm55mpVPbM4tR/QrbY8SC4FH4ooP6mvC7wyjEqhgS4F2WsV1RF+ezka4fNNwqyGrDX61RQkKpzihioobEJ9f2I4rESi7QIqhapPjGDVHIzadwhMyEM5yFH7JypN6toZ7fkpS5dr2p8mvfaqG21Jvwr7568k=
