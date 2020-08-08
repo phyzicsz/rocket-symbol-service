@@ -4,7 +4,7 @@ jdk:
 before_install:
   - cd rocket-symbol-service
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=phyzicsz_sonartest
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=phyzicsz_rocket-symbol-server
 addons:
   sonarcloud:
     organization: phyzicsz
