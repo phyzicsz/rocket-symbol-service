@@ -1,8 +1,12 @@
 language: java
 jdk:
 - openjdk11
-before_install:
-  - cd rocket-symbol-service
-script:
-	- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=phyzicsz_rocketdis
+  #branches:
+  #only:
+  #- main
+  #- development
+    #before_install:
+        #  - cd rocket-symbol-service
+#script:
+#	- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=phyzicsz_rocketdis
 
