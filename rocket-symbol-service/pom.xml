@@ -47,7 +47,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.release.version>11</java.release.version>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <!--<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../jacoco-coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
         
         <!-- dependancies -->
         <guava.version>29.0-jre</guava.version>
@@ -171,6 +171,13 @@
                         <version>${jacoco.maven.plugin.version}</version>
                         <executions>
                             <execution>
+                                <id>prepare-agent</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
                                 <id>report</id>
                                 <goals>
                                     <goal>report-aggregate</goal>
@@ -178,6 +185,15 @@
                                 <phase>verify</phase>
                             </execution>
                         </executions>
+<!--                        <executions>
+                            <execution>
+                                <id>report</id>
+                                <goals>
+                                    <goal>report-aggregate</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>-->
 <!--                        <executions>
                             <execution>
                                 <id>prepare-agent</id>
