@@ -49,11 +49,10 @@
         <java.release.version>11</java.release.version>
         
         <!-- Sonar -->
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+<!--        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-        <sonar.language>java</sonar.language>
-        <!--<aggregate.report.dir>rocket-symbol-service-tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>-->
+        <sonar.language>java</sonar.language>-->
         
         <!-- dependancies -->
         <guava.version>29.0-jre</guava.version>
@@ -203,6 +202,19 @@
                     <artifactId>versions-maven-plugin</artifactId>
               </plugin>
               <plugin>
+                  <groupId>org.jacoco</groupId>
+                  <artifactId>jacoco-maven-plugin</artifactId>
+                  <executions>
+                      <execution>
+                          <id>report</id>
+                          <goals>
+                              <goal>report-aggregate</goal>
+                          </goals>
+                          <phase>verify</phase>
+                      </execution>
+                  </executions>
+              </plugin>
+<!--              <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <executions>
@@ -213,7 +225,7 @@
                             </goals>
                         </execution>
                     </executions>
-              </plugin>
+              </plugin>-->
         </plugins>
     </build>   
     

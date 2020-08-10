@@ -9,6 +9,10 @@
     <artifactId>rocket-symbol-core</artifactId>
     <packaging>jar</packaging>
     
+    <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../rocket-symbol-core/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    </properties>
+    
     <dependencies>
         <dependency>
                 <groupId>com.google.guava</groupId>
