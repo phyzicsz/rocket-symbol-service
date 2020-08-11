@@ -13,44 +13,76 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phyzicsz.rocket.symbol;
+package com.phyzicsz.rocket.symbol.core;
 
 import com.phyzicsz.rocket.symbol.core.RocketSymbolService;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.Disabled;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author phyzicsz <phyzics.z@gmail.com>
  */
-public class RocketSymbolServerTestImageGenerator {
+public class RocketSymbolServerTest {
 
-    public RocketSymbolServerTestImageGenerator() {
+    private static final Logger logger = LoggerFactory.getLogger(RocketSymbolServerTest.class);
+
+    public RocketSymbolServerTest() {
     }
 
     /**
-     * Test of createIcon method, of class MilStd2525IconRetriever.
+     * Test of createIcon method.
      * @throws java.lang.Exception
      */
     @Test
-    @Disabled
     public void testCreateIcon() throws Exception {
         System.out.println("createIcon");
-        String sidc = "SFUPSK---------";
+        String symbolCode = "SFUPSK---------";
         RocketSymbolService instance = new RocketSymbolService();
 
-        Path path = Paths.get("/tmp", sidc + ".png");
-        instance.pngToFile(sidc, path);
+        byte[] actual = instance.asPng(symbolCode);
+
+        Path path = Paths.get("src","test","resources", symbolCode + ".png");
+        byte[] expected = Files.readAllBytes(path);
+//        byte[] expected = getClass().getClassLoader().getResourceAsStream(symbolCode + ".png").readAllBytes();
+        assertThat(expected).contains(actual);
+
+    }
+    
+    /**
+     * Test of createIcon method.
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testCreateIconResize() throws Exception {
+        System.out.println("createIcon");
+        String symbolCode = "SFUPSK---------";
+        RocketSymbolService instance = new RocketSymbolService();
+
+//        byte[] actual = instance.withImageSize(64)
+//                .asPng(symbolCode);
+        
+         Path path = Paths.get("/tmp", symbolCode + ".64..png");
+        instance.withImageSize(64)
+                .pngToFile(symbolCode, path);
+
+//        Path path = Paths.get("src","test","resources", symbolCode + ".png");
+//        byte[] expected = Files.readAllBytes(path);
+////        byte[] expected = getClass().getClassLoader().getResourceAsStream(symbolCode + ".png").readAllBytes();
+//        assertThat(expected).contains(actual);
+
     }
 
     @Test
-    @Disabled
-    public void generateFriendSymbology() throws IOException {
+    public void testFriendSymbology() throws IOException {
         List<String> friend = Arrays.asList(
                 "SFPP------*****",
                 "SFPPS-----*****",
@@ -70,14 +102,17 @@ public class RocketSymbolServerTestImageGenerator {
         RocketSymbolService instance = new RocketSymbolService();
 
         for (String symbolCode : friend) {
-            Path path = Paths.get("/tmp", symbolCode + ".png");
-            instance.pngToFile(symbolCode, path);
+            logger.info("testing symbolCode: {}", symbolCode);
+            byte[] actual = instance.asPng(symbolCode);
+            Path testFile = Paths.get("src", "test", "resources", "2525", "friend", symbolCode + ".png");
+            byte[] expected = Files.readAllBytes(testFile);
+
+            assertThat(expected).contains(actual);
         }
     }
-
+    
     @Test
-    @Disabled
-    public void generateHostileSymbology() throws IOException {
+    public void testHostileSymbology() throws IOException {
         List<String> hostile = Arrays.asList(
                 "SHPP------*****",
                 "SHPPS-----*****",
@@ -97,14 +132,17 @@ public class RocketSymbolServerTestImageGenerator {
         RocketSymbolService instance = new RocketSymbolService();
 
         for (String symbolCode : hostile) {
-            Path path = Paths.get("/tmp", symbolCode + ".png");
-            instance.pngToFile(symbolCode, path);
+            logger.info("testing symbolCode: {}", symbolCode);
+            byte[] actual = instance.asPng(symbolCode);
+            Path testFile = Paths.get("src", "test", "resources", "2525", "hostile", symbolCode + ".png");
+            byte[] expected = Files.readAllBytes(testFile);
+
+            assertThat(expected).contains(actual);
         }
     }
 
     @Test
-    @Disabled
-    public void generateNeutralSymbology() throws IOException {
+    public void testNeutralSymbology() throws IOException {
         List<String> neutral = Arrays.asList(
                 "SNPP------*****",
                 "SNPPS-----*****",
@@ -124,15 +162,18 @@ public class RocketSymbolServerTestImageGenerator {
         RocketSymbolService instance = new RocketSymbolService();
 
         for (String symbolCode : neutral) {
-            Path path = Paths.get("/tmp", symbolCode + ".png");
-            instance.pngToFile(symbolCode, path);
+            logger.info("testing symbolCode: {}", symbolCode);
+            byte[] actual = instance.asPng(symbolCode);
+            Path testFile = Paths.get("src", "test", "resources", "2525", "neutral", symbolCode + ".png");
+            byte[] expected = Files.readAllBytes(testFile);
+
+            assertThat(expected).contains(actual);
         }
     }
-
+    
     @Test
-//    @Disabled
-    public void generateUnknownSymbology() throws IOException {
-        List<String> unknown = Arrays.asList(
+    public void testUnknownSymbology() throws IOException {
+         List<String> unknown = Arrays.asList(
                 "SUPP------*****",
                 "SUPPS-----*****",
                 "SUPPV-----*****",
@@ -151,9 +192,14 @@ public class RocketSymbolServerTestImageGenerator {
         RocketSymbolService instance = new RocketSymbolService();
 
         for (String symbolCode : unknown) {
-            Path path = Paths.get("/tmp", symbolCode + ".png");
-            instance.pngToFile(symbolCode, path);
+            logger.info("testing symbolCode: {}", symbolCode);
+            byte[] actual = instance.asPng(symbolCode);
+            Path testFile = Paths.get("src", "test", "resources", "2525", "unknown", symbolCode + ".png");
+            byte[] expected = Files.readAllBytes(testFile);
+
+            assertThat(expected).contains(actual);
         }
     }
+
 
 }
