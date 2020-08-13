@@ -29,6 +29,15 @@ public final class SymbolCode extends SymbolServiceProperties {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(SymbolCode.class);
 
+    private final String SCHEME_STRING = "scheme";
+    private final String STANDARD_IDENTITY_STRING = "standard identity";
+    private final String CATEGORY_STRING=  "category";
+    private final String STATUS_STRING = "status";
+    private final String SYMBOL_MODIFIER_STRING = "symbolModifier";
+    private final String ORDER_OF_BATTLE_STRING = "order of battle";
+    private final String BATTLE_DIMENSION_STRING = "battle dimension";
+    private final String ECHELON_STRING = "echelon";
+    
     /**
      * Indicates the character for an unused position in a MIL-STD-2525 symbol
      * identification code
@@ -547,7 +556,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_WARFIGHTING)) {
             this.setScheme(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("scheme");
+            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
         }
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
@@ -555,7 +564,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STANDARD_IDENTITY_ALL.contains(s.toUpperCase())) {
             this.setStandardIdentity(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("standard identity");
+            sb.append(sb.length() > 0 ? ", " : "").append(STANDARD_IDENTITY_STRING);
         }
 
         // Battle Dimension (position 3).
@@ -563,7 +572,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.BATTLE_DIMENSION_ALL.contains(s.toUpperCase())) {
             this.setBattleDimension(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("battle dimension");
+            sb.append(sb.length() > 0 ? ", " : "").append(BATTLE_DIMENSION_STRING);
         }
 
         // Status/Operational Condition (position 4).
@@ -571,7 +580,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STATUS_ALL_UEI_SIGINT_SO_EM.contains(s.toUpperCase())) {
             this.setStatus(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("status");
+            sb.append(sb.length() > 0 ? ", " : "").append(STATUS_STRING);
         }
 
         // Function ID (positions 5-10).
@@ -590,7 +599,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setSymbolModifier(s);
         } else if (!"--".equals(s)) // "--" is accepted and indicates a null symbol modifier.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("symbolModifier");
+            sb.append(sb.length() > 0 ? ", " : "").append(SYMBOL_MODIFIER_STRING);
         }
 
         // Country Code (positions 13-14).
@@ -606,7 +615,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setOrderOfBattle(s);
         } else if (!"-".equals(s)) // "-" is accepted and indicates a null order of battle.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("order of battle");
+            sb.append(sb.length() > 0 ? ", " : "").append(ORDER_OF_BATTLE_STRING);
         }
 
         return sb.length() > 0
@@ -631,7 +640,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_TACTICAL_GRAPHICS)) {
             this.setScheme(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("scheme");
+            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
         }
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
@@ -639,7 +648,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STANDARD_IDENTITY_ALL.contains(s.toUpperCase())) {
             this.setStandardIdentity(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("standard identity");
+            sb.append(sb.length() > 0 ? ", " : "").append(STANDARD_IDENTITY_STRING);
         }
 
         // Category (position 3).
@@ -647,7 +656,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.CATEGORY_ALL_TACTICAL_GRAPHICS.contains(s.toUpperCase())) {
             this.setCategory(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("category");
+            sb.append(sb.length() > 0 ? ", " : "").append(CATEGORY_STRING);
         }
 
         // Status/Operational Condition (position 4).
@@ -655,7 +664,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STATUS_ALL_TACTICAL_GRAPHICS_METOC.contains(s.toUpperCase())) {
             this.setStatus(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("status");
+            sb.append(sb.length() > 0 ? ", " : "").append(STATUS_STRING);
         }
 
         // Function ID (positions 5-10).
@@ -671,7 +680,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setEchelon(s);
         } else if (!UNUSED_POSITION_CODE.equals(s)) // "-" is accepted and indicates a null echelon.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("echelon");
+            sb.append(sb.length() > 0 ? ", " : "").append(ECHELON_STRING);
         }
 
         // Country Code (positions 13-14).
@@ -687,7 +696,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setOrderOfBattle(s);
         } else if (!"-".equals(s)) // "-" is accepted and indicates a null order of battle.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("order of battle");
+            sb.append(sb.length() > 0 ? ", " : "").append(ORDER_OF_BATTLE_STRING);
         }
 
         return sb.length() > 0
@@ -712,7 +721,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.SCHEME_METOC.equalsIgnoreCase(s)) {
             this.setScheme(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("scheme");
+            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
         }
 
         // Category (position 2).
@@ -720,7 +729,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.CATEGORY_ALL_METOC.contains(s.toUpperCase())) {
             this.setCategory(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("category");
+            sb.append(sb.length() > 0 ? ", " : "").append(CATEGORY_STRING);
         }
 
         // Static/Dynamic (position 3,4).
@@ -728,7 +737,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STATIC_DYNAMIC_ALL.contains(s.toUpperCase())) {
             this.setStaticDynamic(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("status");
+            sb.append(sb.length() > 0 ? ", " : "").append(STATUS_STRING);
         }
 
         // Function ID (positions 5-10).
@@ -743,7 +752,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.GRAPHIC_TYPE_ALL.contains(s.toUpperCase())) {
             this.setGraphicType(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("echelon");
+            sb.append(sb.length() > 0 ? ", " : "").append(ECHELON_STRING);
         }
 
         // Positions 14 and 15 unused
@@ -769,7 +778,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_INTELLIGENCE)) {
             this.setScheme(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("scheme");
+            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
         }
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
@@ -777,7 +786,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STANDARD_IDENTITY_ALL.contains(s.toUpperCase())) {
             this.setStandardIdentity(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("standard identity");
+            sb.append(sb.length() > 0 ? ", " : "").append(STANDARD_IDENTITY_STRING);
         }
 
         // Battle Dimension (position 3).
@@ -785,7 +794,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.BATTLE_DIMENSION_ALL_INTELLIGENCE.contains(s.toUpperCase())) {
             this.setBattleDimension(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("battle dimension");
+            sb.append(sb.length() > 0 ? ", " : "").append(BATTLE_DIMENSION_STRING);
         }
 
         // Status/Operational Condition (position 4)
@@ -793,7 +802,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STATUS_ALL_UEI_SIGINT_SO_EM.contains(s.toUpperCase())) {
             this.setStatus(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("status");
+            sb.append(sb.length() > 0 ? ", " : "").append(STATUS_STRING);
         }
 
         // Function ID (positions 5-10)
@@ -807,7 +816,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         s = symCode.substring(10, 12);
         if (!"--".equals(s)) // "--" is the only accepted string in positions 11-12.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("symbolModifier");
+            sb.append(sb.length() > 0 ? ", " : "").append(SYMBOL_MODIFIER_STRING);
         }
 
         // Country Code (positions 13-14).
@@ -823,7 +832,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setOrderOfBattle(s);
         } else if (!"-".equals(s)) // "-" is accepted and indicates a null order of battle.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("order of battle");
+            sb.append(sb.length() > 0 ? ", " : "").append(ORDER_OF_BATTLE_STRING);
         }
 
         return sb.length() > 0
@@ -849,7 +858,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_STABILITY_OPERATIONS)) {
             this.setScheme(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("scheme");
+            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
         }
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
@@ -857,7 +866,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STANDARD_IDENTITY_ALL.contains(s.toUpperCase())) {
             this.setStandardIdentity(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("standard identity");
+            sb.append(sb.length() > 0 ? ", " : "").append(STANDARD_IDENTITY_STRING);
         }
 
         // Category (position 3).
@@ -865,7 +874,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.CATEGORY_ALL_STABILITY_OPERATIONS.contains(s.toUpperCase())) {
             this.setCategory(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("category");
+            sb.append(sb.length() > 0 ? ", " : "").append(CATEGORY_STRING);
         }
 
         // Status/Operational Condition (position 4).
@@ -873,7 +882,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STATUS_ALL_UEI_SIGINT_SO_EM.contains(s.toUpperCase())) {
             this.setStatus(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("status");
+            sb.append(sb.length() > 0 ? ", " : "").append(STATUS_STRING);
         }
 
         // Function ID (positions 5-10).
@@ -889,7 +898,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setSymbolModifier(s);
         } else if (!"--".equals(s)) // "--" is accepted and indicates a null symbol modifier.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("symbolModifier");
+            sb.append(sb.length() > 0 ? ", " : "").append(SYMBOL_MODIFIER_STRING);
         }
 
         // Country Code (positions 13-14).
@@ -905,7 +914,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setOrderOfBattle(s);
         } else if (!"-".equals(s)) // "-" is accepted and indicates a null order of battle.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("order of battle");
+            sb.append(sb.length() > 0 ? ", " : "").append(ORDER_OF_BATTLE_STRING);
         }
 
         return sb.length() > 0
@@ -930,7 +939,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_EMERGENCY_MANAGEMENT)) {
             this.setScheme(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("scheme");
+            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
         }
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
@@ -938,7 +947,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STANDARD_IDENTITY_ALL.contains(s.toUpperCase())) {
             this.setStandardIdentity(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("standard identity");
+            sb.append(sb.length() > 0 ? ", " : "").append(STANDARD_IDENTITY_STRING);
         }
 
         // Category (position 3).
@@ -946,7 +955,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.CATEGORY_ALL_EMERGENCY_MANAGEMENT.contains(s.toUpperCase())) {
             this.setCategory(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("category");
+            sb.append(sb.length() > 0 ? ", " : "").append(CATEGORY_STRING);
         }
 
         // Status/Operational Condition (position 4).
@@ -954,7 +963,7 @@ public final class SymbolCode extends SymbolServiceProperties {
         if (SymbologyConstants.STATUS_ALL_UEI_SIGINT_SO_EM.contains(s.toUpperCase())) {
             this.setStatus(s);
         } else {
-            sb.append(sb.length() > 0 ? ", " : "").append("status");
+            sb.append(sb.length() > 0 ? ", " : "").append(STATUS_STRING);
         }
 
         // Function ID (positions 5-10).
@@ -971,7 +980,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setSymbolModifier(s);
         } else if (!"--".equals(s)) // "--" is accepted and indicates a null symbol modifier.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("symbolModifier");
+            sb.append(sb.length() > 0 ? ", " : "").append(SYMBOL_MODIFIER_STRING);
         }
 
         // Country Code (positions 13-14).
@@ -987,7 +996,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             this.setOrderOfBattle(s);
         } else if (!"-".equals(s)) // "-" is accepted and indicates a null order of battle.
         {
-            sb.append(sb.length() > 0 ? ", " : "").append("order of battle");
+            sb.append(sb.length() > 0 ? ", " : "").append(ORDER_OF_BATTLE_STRING);
         }
 
         return sb.length() > 0
