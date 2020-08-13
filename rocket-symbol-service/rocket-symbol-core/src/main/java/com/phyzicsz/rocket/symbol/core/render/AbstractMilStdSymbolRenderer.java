@@ -18,10 +18,10 @@ package com.phyzicsz.rocket.symbol.core.render;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -157,59 +157,6 @@ public abstract class AbstractMilStdSymbolRenderer implements SymbolRenderer {
         }
     }
 
-    /**
-     * Replace the color of each pixel in an image. This method retains the
-     * alpha channel of each pixel, but completely replaces the red, green, and
-     * blue components with the replacement color.
-     *
-     * @param image Image to operate on.
-     * @param color Color to apply to to each pixel.
-     */
-    protected void replaceColor(BufferedImage image, Color color) {
-        if (image == null) {
-            logger.error("image is null");
-            throw new IllegalArgumentException("image is null");
-        }
-
-        if (color == null) {
-            logger.error("color is null");
-            throw new IllegalArgumentException("color is null");
-        }
-
-        int w = image.getWidth();
-        int h = image.getHeight();
-
-        if (w == 0 || h == 0) {
-            return;
-        }
-
-        int[] pixels = new int[w];
-        int c = color.getRGB();
-        float cr = ((c >> 16) & 0xff) / 255f;
-        float cg = ((c >> 8) & 0xff) / 255f;
-        float cb = (c & 0xff) / 255f;
-
-        for (int y = 0; y < h; y++) {
-            image.getRGB(0, y, w, 1, pixels, 0, w);
-
-            for (int x = 0; x < w; x++) {
-                int s = pixels[x];
-                float sa = ((s >> 24) & 0xff) / 255f;
-
-                int fa = (int) (sa * 255 + 0.5);
-                int fr = (int) (cr * 255 + 0.5);
-                int fg = (int) (cg * 255 + 0.5);
-                int fb = (int) (cb * 255 + 0.5);
-
-                pixels[x] = (fa & 0xff) << 24
-                        | (fr & 0xff) << 16
-                        | (fg & 0xff) << 8
-                        | (fb & 0xff);
-            }
-
-            image.setRGB(0, y, w, 1, pixels, 0, w);
-        }
-    }
 
     @Override
     public int hashCode() {

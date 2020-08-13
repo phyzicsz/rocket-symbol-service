@@ -16,7 +16,7 @@
 package com.phyzicsz.rocket.symbol.core.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -42,9 +42,9 @@ public class MimeEncodingUtilsTest {
     public void nullTest() {
         String imageFormat = null;
 
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            MimeEncodingUtils.makeSuffixForMimeType(imageFormat);
-        });
+        assertThatThrownBy(() -> { 
+           MimeEncodingUtils.makeSuffixForMimeType(imageFormat);
+        }).isInstanceOf(IllegalStateException.class);
 
     }
 
@@ -52,9 +52,9 @@ public class MimeEncodingUtilsTest {
     public void invalidTest() {
         String imageFormat = "image|png";
 
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            MimeEncodingUtils.makeSuffixForMimeType(imageFormat);
-        });
+        assertThatThrownBy(() -> { 
+           MimeEncodingUtils.makeSuffixForMimeType(imageFormat);
+        }).isInstanceOf(IllegalStateException.class);
 
     }
 

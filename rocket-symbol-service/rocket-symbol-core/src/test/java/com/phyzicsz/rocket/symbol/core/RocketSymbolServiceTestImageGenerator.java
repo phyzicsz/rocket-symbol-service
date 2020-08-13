@@ -27,9 +27,9 @@ import org.junit.jupiter.api.Disabled;
  *
  * @author phyzicsz <phyzics.z@gmail.com>
  */
-public class RocketSymbolServerTestImageGenerator {
+public class RocketSymbolServiceTestImageGenerator {
 
-    public RocketSymbolServerTestImageGenerator() {
+    public RocketSymbolServiceTestImageGenerator() {
     }
 
     /**

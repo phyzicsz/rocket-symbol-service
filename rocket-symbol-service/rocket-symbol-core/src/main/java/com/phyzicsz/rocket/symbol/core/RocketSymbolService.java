@@ -17,7 +17,6 @@ package com.phyzicsz.rocket.symbol.core;
 
 import com.phyzicsz.rocket.symbol.core.render.MilStdSymbolRenderer;
 import com.phyzicsz.rocket.symbol.core.sidc.SymbolServiceProperties;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,26 +38,6 @@ public class RocketSymbolService {
         props.put(SymbolServiceProperties.IMAGE_SIZE, 128);
     }
 
-    public RocketSymbolService withShowIcon(final Boolean value) {
-        props.put(SymbolServiceProperties.SHOW_ICON, value);
-        return this;
-    }
-
-    public RocketSymbolService withShowFrame(final Boolean value) {
-        props.put(SymbolServiceProperties.SHOW_FRAME, value);
-        return this;
-    }
-
-    public RocketSymbolService withShowFill(final Boolean value) {
-        props.put(SymbolServiceProperties.SHOW_FILL, value);
-        return this;
-    }
-
-    public RocketSymbolService withFillColor(final Color value) {
-        props.put(SymbolServiceProperties.COLOR, value);
-        
-        return this;
-    }
     
     public RocketSymbolService withImageSize(final Integer value) {
         props.put(SymbolServiceProperties.IMAGE_SIZE, value);

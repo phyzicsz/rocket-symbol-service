@@ -16,14 +16,20 @@
 package com.phyzicsz.rocket.symbol.core;
 
 import java.awt.image.BufferedImage;
-import org.junit.jupiter.api.Test;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,15 +37,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author phyzicsz <phyzics.z@gmail.com>
  */
-public class RocketSymbolServerTest {
+public class RocketSymbolServiceTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(RocketSymbolServerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(RocketSymbolServiceTest.class);
 
-    public RocketSymbolServerTest() {
+    public RocketSymbolServiceTest() {
     }
 
     /**
      * Test of createIcon method.
+     *
      * @throws java.lang.Exception
      */
     @Test
@@ -50,15 +57,103 @@ public class RocketSymbolServerTest {
 
         byte[] actual = instance.asPng(symbolCode);
 
-        Path path = Paths.get("src","test","resources", symbolCode + ".png");
+        Path path = Paths.get("src", "test", "resources", symbolCode + ".png");
         byte[] expected = Files.readAllBytes(path);
 //        byte[] expected = getClass().getClassLoader().getResourceAsStream(symbolCode + ".png").readAllBytes();
         assertThat(expected).contains(actual);
 
     }
-    
+
     /**
      * Test of createIcon method.
+     *
+     * @param tempDir
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testPngToFile(@TempDir Path tempDir) throws Exception {
+        System.out.println("createIcon");
+        String symbolCode = "SFUPSK---------";
+        RocketSymbolService instance = new RocketSymbolService();
+
+        byte[] actual = instance.asPng(symbolCode);
+
+        String fileName = tempDir.toString() + symbolCode + ".file.png";
+        Path filePath = Paths.get(tempDir.toString(), symbolCode + ".path.png");
+
+        instance.pngToFile(symbolCode, fileName);
+        byte[] expected1 = Files.readAllBytes(Paths.get(fileName));
+        assertThat(expected1).contains(actual);
+
+        instance.pngToFile(symbolCode, filePath);
+        byte[] expected2 = Files.readAllBytes(filePath);
+        assertThat(expected2).contains(actual);
+    }
+
+    /**
+     * Test of toPng method.
+     *
+     * @param tempDir
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void toPng(@TempDir Path tempDir) throws Exception {
+        System.out.println("createIcon");
+        String symbolCode = "SFUPSK---------";
+        RocketSymbolService instance = new RocketSymbolService();
+
+        Path filePath = Paths.get(tempDir.toString(), symbolCode + ".png");
+        byte[] bytes = instance.asPng(symbolCode);
+        
+        try (FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
+            stream.write(bytes);
+        }
+        
+
+        ImageInputStream iis = ImageIO.createImageInputStream(filePath.toFile());
+        Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
+
+        while (imageReaders.hasNext()) {
+            ImageReader reader =imageReaders.next();
+            assertThat(reader.getFormatName()).isEqualTo("png");
+
+        }
+
+    }
+    
+    /**
+     * Test of toPng method.
+     *
+     * @param tempDir
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void toJpg(@TempDir Path tempDir) throws Exception {
+        System.out.println("createIcon");
+        String symbolCode = "SFUPSK---------";
+        RocketSymbolService instance = new RocketSymbolService();
+
+        Path filePath = Paths.get(tempDir.toString(), symbolCode + ".jpg");
+        byte[] bytes = instance.asJpg(symbolCode);
+        
+        try (FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
+            stream.write(bytes);
+        }
+
+        ImageInputStream iis = ImageIO.createImageInputStream(filePath.toFile());
+        Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
+
+        while (imageReaders.hasNext()) {
+            ImageReader reader =imageReaders.next();
+            assertThat(reader.getFormatName()).isEqualTo("jpg");
+
+        }
+
+    }
+
+    /**
+     * Test of testCreateIconResize method.
+     *
      * @throws java.lang.Exception
      */
     @Test
@@ -69,14 +164,27 @@ public class RocketSymbolServerTest {
 
         BufferedImage image = instance.withImageSize(64)
                 .asBufferedImage(symbolCode);
-        
+
         assertThat(image.getWidth()).isEqualTo(64);
         assertThat(image.getHeight()).isEqualTo(64);
-        
-//         Path path = Paths.get("/tmp", symbolCode + ".64..png");
-//        instance.withImageSize(64)
-//                .pngToFile(symbolCode, path);
+    }
+    
+    /**
+     * Test of testCreateIconResize method.
+     *
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testCreateIconResize0() throws Exception {
+        System.out.println("createIcon");
+        String symbolCode = "SFUPSK---------";
+        RocketSymbolService instance = new RocketSymbolService();
 
+        BufferedImage image = instance.withImageSize(0)
+                .asBufferedImage(symbolCode);
+
+        assertThat(image.getWidth()).isEqualTo(128);
+        assertThat(image.getHeight()).isEqualTo(128);
     }
 
     @Test
@@ -108,7 +216,7 @@ public class RocketSymbolServerTest {
             assertThat(expected).contains(actual);
         }
     }
-    
+
     @Test
     public void testHostileSymbology() throws IOException {
         List<String> hostile = Arrays.asList(
@@ -168,10 +276,10 @@ public class RocketSymbolServerTest {
             assertThat(expected).contains(actual);
         }
     }
-    
+
     @Test
     public void testUnknownSymbology() throws IOException {
-         List<String> unknown = Arrays.asList(
+        List<String> unknown = Arrays.asList(
                 "SUPP------*****",
                 "SUPPS-----*****",
                 "SUPPV-----*****",
@@ -198,6 +306,5 @@ public class RocketSymbolServerTest {
             assertThat(expected).contains(actual);
         }
     }
-
 
 }
