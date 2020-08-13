@@ -15,15 +15,8 @@
  */
 package com.phyzicsz.rocket.symbol.core.sidc;
 
-import com.phyzicsz.rocket.symbol.core.sidc.SymbologyConstants;
-import com.phyzicsz.rocket.symbol.core.sidc.SymbolCode;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -35,12 +28,32 @@ public class SymbolCodeTest {
     }
 
      @Test
-     public void basicTest() {
+     public void basicBuildTest() {
          SymbolCode symbol = new SymbolCode();
          symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_HOSTILE);
          symbol.setScheme(SymbologyConstants.SCHEME_WARFIGHTING);
          String sidc = symbol.toString();
          assertThat(sidc).isEqualTo("SH-------------");
+     }
+     
+     @Test
+     public void basicSymbolCodeTest() {
+         String sidc = "SFUPSK---------";
+         SymbolCode symbol = new SymbolCode();
+         String unknownSymbols = symbol.parseSymCode(sidc);
+         assertThat(unknownSymbols).isNull();
+         
+         String scheme = symbol.getScheme();
+         String identity = symbol.getStandardIdentity();
+         String battleDimension= symbol.getBattleDimension();
+         String status = symbol.getStatus();
+         
+         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_WARFIGHTING);
+         assertThat(identity).isEqualTo(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
+         assertThat(battleDimension).isEqualTo(SymbologyConstants.BATTLE_DIMENSION_SEA_SUBSURFACE);
+         assertThat(status).isEqualTo(SymbologyConstants.STATUS_PRESENT);
+       
+         
      }
 }
 
