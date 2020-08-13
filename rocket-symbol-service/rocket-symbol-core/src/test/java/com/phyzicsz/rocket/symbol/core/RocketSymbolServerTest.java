@@ -15,7 +15,7 @@
  */
 package com.phyzicsz.rocket.symbol.core;
 
-import com.phyzicsz.rocket.symbol.core.RocketSymbolService;
+import java.awt.image.BufferedImage;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -67,17 +67,15 @@ public class RocketSymbolServerTest {
         String symbolCode = "SFUPSK---------";
         RocketSymbolService instance = new RocketSymbolService();
 
-//        byte[] actual = instance.withImageSize(64)
-//                .asPng(symbolCode);
+        BufferedImage image = instance.withImageSize(64)
+                .asBufferedImage(symbolCode);
         
-         Path path = Paths.get("/tmp", symbolCode + ".64..png");
-        instance.withImageSize(64)
-                .pngToFile(symbolCode, path);
-
-//        Path path = Paths.get("src","test","resources", symbolCode + ".png");
-//        byte[] expected = Files.readAllBytes(path);
-////        byte[] expected = getClass().getClassLoader().getResourceAsStream(symbolCode + ".png").readAllBytes();
-//        assertThat(expected).contains(actual);
+        assertThat(image.getWidth()).isEqualTo(64);
+        assertThat(image.getHeight()).isEqualTo(64);
+        
+//         Path path = Paths.get("/tmp", symbolCode + ".64..png");
+//        instance.withImageSize(64)
+//                .pngToFile(symbolCode, path);
 
     }
 

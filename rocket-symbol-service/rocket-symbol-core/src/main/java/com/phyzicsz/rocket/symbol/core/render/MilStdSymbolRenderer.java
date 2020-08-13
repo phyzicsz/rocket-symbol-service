@@ -15,8 +15,11 @@
  */
 package com.phyzicsz.rocket.symbol.core.render;
 
-import com.phyzicsz.rocket.symbol.core.sidc.SymbologyConstants;
 import com.phyzicsz.rocket.symbol.core.sidc.SymbolCode;
+import com.phyzicsz.rocket.symbol.core.sidc.SymbolServiceProperties;
+import com.phyzicsz.rocket.symbol.core.sidc.SymbologyConstants;
+import com.phyzicsz.rocket.symbol.core.utils.ImageUtils;
+import com.phyzicsz.rocket.symbol.core.utils.MimeEncodingUtils;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -27,15 +30,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import com.phyzicsz.rocket.symbol.kvstore.KVKey;
-//import com.phyzicsz.rocket.symbol.kvstore.AbstractKVStore;
-import com.phyzicsz.rocket.symbol.core.sidc.SymbolServiceProperties;
-import com.phyzicsz.rocket.symbol.core.utils.ImageUtils;
-import com.phyzicsz.rocket.symbol.core.utils.MimeEncodingUtils;
-import java.util.Objects;
 
 /**
  * MilStd 2525 Symbol Renderer.
