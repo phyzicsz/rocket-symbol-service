@@ -25,3 +25,6 @@ hs_err_pid*
 /rocket-symbol-service/rocket-symbol-core/target/
 /rocket-symbol-service/target/
 /rocket-symbol-service/rocket-symbol-service-test/target/
+/rocket-symbol-service/rocket-symbol-renderer/target/
+/rocket-symbol-service/rocket-symbol-code/nbproject/
+/rocket-symbol-service/rocket-symbol-code/target/

@@ -41,8 +41,9 @@
     </developers>
     
     <modules>
-        <module>rocket-symbol-core</module>
         <module>rocket-symbol-service-test</module>
+        <module>rocket-symbol-renderer</module>
+        <module>rocket-symbol-code</module>
     </modules>
     
     <properties>
