@@ -16,6 +16,7 @@
 package com.phyzicsz.rocket.symbol.core;
 
 import com.phyzicsz.rocket.symbol.code.SymbolServiceProperties;
+import com.phyzicsz.rocket.symbol.core.exception.UnsupportedMimeType;
 import com.phyzicsz.rocket.symbol.core.render.MilStdSymbolRenderer;
 import com.phyzicsz.rocket.symbol.core.render.ServiceConstants;
 import java.awt.image.BufferedImage;
@@ -46,11 +47,11 @@ public class RocketSymbolService {
         return this;
     }
 
-    public BufferedImage asBufferedImage(final String symbolCode) throws IOException {
+    public BufferedImage asBufferedImage(final String symbolCode) throws IOException, UnsupportedMimeType {
         return renderer.createIcon(symbolCode, props);
     }
 
-    public byte[] asPng(final String symbolCode) throws IOException {
+    public byte[] asPng(final String symbolCode) throws IOException, UnsupportedMimeType {
         BufferedImage image = renderer.createIcon(symbolCode, props);
 
         byte[] bytes;
@@ -62,7 +63,7 @@ public class RocketSymbolService {
         return bytes;
     }
     
-    public byte[] asJpg(final String symbolCode) throws IOException {
+    public byte[] asJpg(final String symbolCode) throws IOException, UnsupportedMimeType {
         BufferedImage image = renderer.createIcon(symbolCode, props);
 
         byte[] bytes;
@@ -74,7 +75,7 @@ public class RocketSymbolService {
         return bytes;
     }
     
-    public void pngToFile(final String symbolCode, final String path) throws IOException {
+    public void pngToFile(final String symbolCode, final String path) throws IOException, UnsupportedMimeType {
         BufferedImage image = renderer.createIcon(symbolCode, props);
 
         byte[] bytes;
@@ -88,7 +89,7 @@ public class RocketSymbolService {
         Files.write(filepath, bytes);
     }
     
-    public void pngToFile(final String symbolCode, final Path path) throws IOException {
+    public void pngToFile(final String symbolCode, final Path path) throws IOException, UnsupportedMimeType {
         BufferedImage image = renderer.createIcon(symbolCode, props);
 
         byte[] bytes;

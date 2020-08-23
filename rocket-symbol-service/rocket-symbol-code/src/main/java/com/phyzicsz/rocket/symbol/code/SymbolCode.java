@@ -26,40 +26,39 @@ import org.slf4j.LoggerFactory;
  * @author phyzicsz <phyzics.z@gmail.com>
  */
 public final class SymbolCode extends SymbolServiceProperties {
+
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(SymbolCode.class);
 
-    private final String SCHEME_STRING = "scheme";
     private final String STANDARD_IDENTITY_STRING = "standard identity";
-    private final String CATEGORY_STRING=  "category";
+    private final String CATEGORY_STRING = "category";
     private final String STATUS_STRING = "status";
     private final String SYMBOL_MODIFIER_STRING = "symbolModifier";
     private final String ORDER_OF_BATTLE_STRING = "order of battle";
     private final String BATTLE_DIMENSION_STRING = "battle dimension";
     private final String ECHELON_STRING = "echelon";
-    
+
     /**
      * Indicates the character for an unused position in a MIL-STD-2525 symbol
      * identification code
      */
     protected static final String UNUSED_POSITION_CODE = "-";
-    
 
     /**
      * Creates a new symbol code, with all fields initialized to null.
      */
     public SymbolCode() {
-        
+
     }
 
     /**
      * Creates a new SymbolCode by parsing the fields of the specified
-     * MIL-STD-2525 15-character alphanumeric symbol identification code
-     * (SIDC).
+     * MIL-STD-2525 15-character alphanumeric symbol identification code (SIDC).
      *
      * @param symCode the symbol identification code to parse.
      * @throws java.io.IOException
-     * @throws IllegalArgumentException if the symCode is null or has a length other than 15.
+     * @throws IllegalArgumentException if the symCode is null or has a length
+     * other than 15.
      */
     public SymbolCode(String symCode) throws IOException {
         if (symCode == null) {
@@ -72,13 +71,7 @@ public final class SymbolCode extends SymbolServiceProperties {
             throw new IllegalArgumentException("symbol code is invalid len");
         }
 
-        String s = this.parseSymCode(symCode);
-        if (s != null) {
-            // A non-null return value indicates the symCode is unrecognized, and contains a message indicating the
-            // problematic fields.
-            logger.error("unknown sym code: {}", s);
-            throw new IOException(s);
-        }
+        this.parseSymCode(symCode);
     }
 
     /**
@@ -93,15 +86,15 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Coding Scheme field. The value must be <code>null</code> 
-     * or one of the following:
-     * <ul> 
-     * <li>SCHEME_WARFIGHTING</li> 
+     * Specifies this symbol code's Coding Scheme field. The value must be
+     * <code>null</code> or one of the following:
+     * <ul>
+     * <li>SCHEME_WARFIGHTING</li>
      * <li>SCHEME_TACTICAL_GRAPHICS</li>
      * <li>SCHEME_METOC</li>
-     * <li>SCHEME_INTELLIGENCE</li> 
+     * <li>SCHEME_INTELLIGENCE</li>
      * <li>SCHEME_STABILITY_OPERATIONS</li>
-     * <li>SCHEME_EMERGENCY_MANAGEMENT</li> 
+     * <li>SCHEME_EMERGENCY_MANAGEMENT</li>
      * </ul>
      *
      * @param value the new value for the Coding Scheme field. May be
@@ -124,12 +117,12 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Standard Identity field. 
-     * <ul> 
+     * Specifies this symbol code's Standard Identity field.
+     * <ul>
      * <li>STANDARD_IDENTITY_PENDING</li>
      * <li>STANDARD_IDENTITY_UNKNOWN</li>
      * <li>STANDARD_IDENTITY_ASSUMED_FRIEND</li>
-     * <li>STANDARD_IDENTITY_FRIEND</li> 
+     * <li>STANDARD_IDENTITY_FRIEND</li>
      * <li>STANDARD_IDENTITY_NEUTRAL</li>
      * <li>STANDARD_IDENTITY_SUSPECT</li>
      * <li>STANDARD_IDENTITY_HOSTILE</li>
@@ -138,8 +131,8 @@ public final class SymbolCode extends SymbolServiceProperties {
      * <li>STANDARD_IDENTITY_EXERCISE_ASSUMED_FRIEND</li>
      * <li>STANDARD_IDENTITY_EXERCISE_FRIEND</li>
      * <li>STANDARD_IDENTITY_EXERCISE_NEUTRAL</li>
-     * <li>STANDARD_IDENTITY_JOKER</li> 
-     * <li>STANDARD_IDENTITY_FAKER</li> 
+     * <li>STANDARD_IDENTITY_JOKER</li>
+     * <li>STANDARD_IDENTITY_FAKER</li>
      * </ul>
      *
      * @param value the new value for the Standard Identity field. May be
@@ -162,15 +155,15 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Battle Dimension field. 
-     * <ul> 
-     * <li>BATTLE_DIMENSION_SPACE</li> 
+     * Specifies this symbol code's Battle Dimension field.
+     * <ul>
+     * <li>BATTLE_DIMENSION_SPACE</li>
      * <li>BATTLE_DIMENSION_AIR</li>
      * <li>BATTLE_DIMENSION_GROUND</li>
      * <li>BATTLE_DIMENSION_SEA_SURFACE</li>
-     * <li>BATTLE_DIMENSION_SEA_SUBSURFACE</li> 
+     * <li>BATTLE_DIMENSION_SEA_SUBSURFACE</li>
      * <li>BATTLE_DIMENSION_SOF</li>
-     * <li>BATTLE_DIMENSION_OTHER</li> 
+     * <li>BATTLE_DIMENSION_OTHER</li>
      * </ul>
      *
      * @param value the new value for the Battle Dimension field. May be
@@ -192,33 +185,33 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Category field. 
+     * Specifies this symbol code's Category field.
      * <p>
      * <strong>Tactical Graphics</strong>
-     * <ul> 
+     * <ul>
      * <li>CATEGORY_TASKS</li>
      * <li>CATEGORY_COMMAND_CONTROL_GENERAL_MANEUVER</li>
-     * <li>CATEGORY_MOBILITY_SURVIVABILITY</li> 
+     * <li>CATEGORY_MOBILITY_SURVIVABILITY</li>
      * <li>CATEGORY_FIRE_SUPPORT</li>
      * <li>CATEGORY_COMBAT_SERVICE_SUPPORT</li>
-     * <li>CATEGORY_OTHER</li> 
+     * <li>CATEGORY_OTHER</li>
      * </ul>
      * <p>
      * <strong>Stability Operations</strong>
-     * <ul> <li>CATEGORY_VIOLENT_ACTIVITIES</li> 
+     * <ul> <li>CATEGORY_VIOLENT_ACTIVITIES</li>
      * <li>CATEGORY_LOCATIONS</li>
      * <li>CATEGORY_OPERATIONS</li>
-     * <li>CATEGORY_ITEMS</li> 
+     * <li>CATEGORY_ITEMS</li>
      * <li>CATEGORY_INDIVIDUAL</li>
      * <li>CATEGORY_NONMILITARY_GROUP_ORGANIZATION</li>
-     * <li>CATEGORY_RAPE</li> 
+     * <li>CATEGORY_RAPE</li>
      * </ul>
      * <p>
      * <strong>Emergency Management</strong>
-     * <ul> <li>CATEGORY_INCIDENT</li> 
+     * <ul> <li>CATEGORY_INCIDENT</li>
      * <li>CATEGORY_NATURAL_EVENTS</li>
      * <li>CATEGORY_OPERATIONS</li>
-     * <li>CATEGORY_INFRASTRUCTURE</li> 
+     * <li>CATEGORY_INFRASTRUCTURE</li>
      * </ul>
      *
      * @param value the new value for the Category field. May be
@@ -241,28 +234,28 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Status/Operational Condition field. 
+     * Specifies this symbol code's Status/Operational Condition field.
      * <p>
      * <strong>Warfighting, Signals Intelligence, Stability Operations</strong>
-     * <ul> 
-     * <li>STATUS_ANTICIPATED</li> 
+     * <ul>
+     * <li>STATUS_ANTICIPATED</li>
      * <li>STATUS_PRESENT</li>
      * <li>STATUS_PRESENT_FULLY_CAPABLE</li>
-     * <li>STATUS_PRESENT_DAMAGED</li> 
+     * <li>STATUS_PRESENT_DAMAGED</li>
      * <li>STATUS_PRESENT_DESTROYED</li>
-     * <li>STATUS_PRESENT_FULL_TO_CAPACITY</li> 
+     * <li>STATUS_PRESENT_FULL_TO_CAPACITY</li>
      * </ul>
      * <p>
      * <strong>Tactical Graphics</strong>
-     * <ul> <li>STATUS_ANTICIPATED</li> 
+     * <ul> <li>STATUS_ANTICIPATED</li>
      * <li>STATUS_SUSPECTED</li>
-     * <li>STATUS_PRESENT</li> 
+     * <li>STATUS_PRESENT</li>
      * <li>STATUS_KNOWN</li> </ul>
      * <p>
      * <strong>Emergency Management</strong>
-     * <ul> 
-     * <li>STATUS_ANTICIPATED</li> 
-     * <li>STATUS_PRESENT</li> 
+     * <ul>
+     * <li>STATUS_ANTICIPATED</li>
+     * <li>STATUS_PRESENT</li>
      * </ul>
      *
      * @param value the new value for the Status/Operational Condition field.
@@ -305,7 +298,7 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Symbol Modifier field. 
+     * Specifies this symbol code's Symbol Modifier field.
      *
      * @param value the new value for the Symbol Modifier field. May be
      * <code>null</code>.
@@ -326,22 +319,22 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Echelon field. 
-     * <ul> 
-     * <li>ECHELON_TEAM_CREW</li> 
+     * Specifies this symbol code's Echelon field.
+     * <ul>
+     * <li>ECHELON_TEAM_CREW</li>
      * <li>ECHELON_SQUAD</li>
      * <li>ECHELON_SECTION</li>
      * <li>ECHELON_PLATOON_DETACHMENT</li>
      * <li>ECHELON_COMPANY_BATTERY_TROOP</li>
      * <li>ECHELON_BATTALION_SQUADRON</li>
-     * <li>ECHELON_REGIMENT_GROUP</li> 
+     * <li>ECHELON_REGIMENT_GROUP</li>
      * <li>ECHELON_BRIGADE</li>
-     * <li>ECHELON_DIVISION</li> 
+     * <li>ECHELON_DIVISION</li>
      * <li>ECHELON_CORPS</li>
-     * <li>ECHELON_ARMY</li> 
+     * <li>ECHELON_ARMY</li>
      * <li>ECHELON_ARMY_GROUP_FRONT</li>
-     * <li>ECHELON_REGION</li> 
-     * <li>ECHELON_COMMAND</li> 
+     * <li>ECHELON_REGION</li>
+     * <li>ECHELON_COMMAND</li>
      * </ul>
      * <p>
      *
@@ -364,8 +357,8 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Country Code field. 
-     * 
+     * Specifies this symbol code's Country Code field.
+     *
      * @param value the new value for the Country Code field. May be
      * <code>null</code>.
      */
@@ -385,22 +378,22 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Order of Battle field. 
+     * Specifies this symbol code's Order of Battle field.
      * <p>
      * <strong>Warfighting, Signals Intelligence, Stability Operations,
      * Emergency Management</strong>
-     * <ul> 
-     * <li>ORDER_OF_BATTLE_AIR</li> 
+     * <ul>
+     * <li>ORDER_OF_BATTLE_AIR</li>
      * <li>ORDER_OF_BATTLE_ELECTRONIC</li>
      * <li>ORDER_OF_BATTLE_CIVILIAN</li>
-     * <li>ORDER_OF_BATTLE_GROUND</li> 
+     * <li>ORDER_OF_BATTLE_GROUND</li>
      * <li>ORDER_OF_BATTLE_MARITIME</li>
      * <li>ORDER_OF_BATTLE_STRATEGIC_FORCE_RELATED</li>
      * </ul>
      * <p>
      * <strong>Tactical Graphics</strong>
-     * <ul> 
-     * <li>ORDER_OF_BATTLE_CONTROL_MARKINGS</li> 
+     * <ul>
+     * <li>ORDER_OF_BATTLE_CONTROL_MARKINGS</li>
      * </ul>
      *
      * @param value the new value for the Order of Battle field. May be
@@ -423,7 +416,7 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Static/Dynamic field. 
+     * Specifies this symbol code's Static/Dynamic field.
      *
      * @param value the new value for the Static/Dynamic field. May be
      * <code>null</code>.
@@ -444,7 +437,7 @@ public final class SymbolCode extends SymbolServiceProperties {
     }
 
     /**
-     * Specifies this symbol code's Graphic Type field. 
+     * Specifies this symbol code's Graphic Type field.
      *
      * @param value the new value for the Graphic Type field. May be
      * <code>null</code>.
@@ -455,8 +448,8 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Returns the MIL-STD-2525 15-character symbol identification code (SIDC)
-     * corresponding to this SymbolCode's current field values. 
-     * 
+     * corresponding to this SymbolCode's current field values.
+     *
      *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode
@@ -490,7 +483,6 @@ public final class SymbolCode extends SymbolServiceProperties {
         return masked.toString();
     }
 
-  
     /**
      * Parses a symbol code encoded into its individual fields, populating this
      * SymbolCode's fields with the value of each field. Fields that are either
@@ -541,9 +533,9 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Parses a symbol code encoded in the Warfighting coding scheme.
-     * 
      *
-     * @param symCode the symbol code to parse. 
+     *
+     * @param symCode the symbol code to parse.
      *
      * @return <code>null</code> if the symbol code is recognized, otherwise a
      * non-<code>null</code> string listing the unrecognized symbol code fields.
@@ -553,11 +545,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
         // Coding Scheme (position 1).
         String s = symCode.substring(0, 1);
-        if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_WARFIGHTING)) {
-            this.setScheme(s);
-        } else {
-            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
-        }
+        this.setScheme(s);
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
         s = symCode.substring(1, 2);
@@ -637,11 +625,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
         // Coding Scheme (position 1).
         String s = symCode.substring(0, 1);
-        if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_TACTICAL_GRAPHICS)) {
-            this.setScheme(s);
-        } else {
-            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
-        }
+        this.setScheme(s);
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
         s = symCode.substring(1, 2);
@@ -718,11 +702,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
         // Coding Scheme (position 1).
         String s = symCode.substring(0, 1);
-        if (SymbologyConstants.SCHEME_METOC.equalsIgnoreCase(s)) {
-            this.setScheme(s);
-        } else {
-            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
-        }
+        this.setScheme(s);
 
         // Category (position 2).
         s = symCode.substring(1, 2);
@@ -775,11 +755,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
         // Coding Scheme (position 1).
         String s = symCode.substring(0, 1);
-        if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_INTELLIGENCE)) {
-            this.setScheme(s);
-        } else {
-            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
-        }
+        this.setScheme(s);
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
         s = symCode.substring(1, 2);
@@ -855,11 +831,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
         // Coding Scheme (position 1).
         String s = symCode.substring(0, 1);
-        if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_STABILITY_OPERATIONS)) {
-            this.setScheme(s);
-        } else {
-            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
-        }
+        this.setScheme(s);
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
         s = symCode.substring(1, 2);
@@ -936,11 +908,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
         // Coding Scheme (position 1).
         String s = symCode.substring(0, 1);
-        if (s != null && s.equalsIgnoreCase(SymbologyConstants.SCHEME_EMERGENCY_MANAGEMENT)) {
-            this.setScheme(s);
-        } else {
-            sb.append(sb.length() > 0 ? ", " : "").append(SCHEME_STRING);
-        }
+        this.setScheme(s);
 
         // Standard Identity/Exercise Amplifying Descriptor (position 2).
         s = symCode.substring(1, 2);
@@ -1064,7 +1032,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Composes a 15-character symbol identification code (SIDC) for the
-     * Warfighting coding scheme. 
+     * Warfighting coding scheme.
      *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode, according to the Warfighting coding
@@ -1087,7 +1055,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Composes a 15-character symbol identification code (SIDC) for the
-     * Tactical Graphics coding scheme. 
+     * Tactical Graphics coding scheme.
      *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode, according to the Tactical Graphics
@@ -1111,8 +1079,8 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Composes a 15-character symbol identification code (SIDC) for the
-     * Meteorological and Oceanographic coding scheme. 
-     * 
+     * Meteorological and Oceanographic coding scheme.
+     *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode, according to the METOC coding scheme.
      */
@@ -1132,7 +1100,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Composes a 15-character symbol identification code (SIDC) for the Signals
-     * Intelligence coding scheme. 
+     * Intelligence coding scheme.
      *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode, according to the Signals Intelligence
@@ -1155,7 +1123,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Composes a 15-character symbol identification code (SIDC) for the
-     * Stability Operations coding scheme. 
+     * Stability Operations coding scheme.
      *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode, according to the Stability Operations
@@ -1178,7 +1146,7 @@ public final class SymbolCode extends SymbolServiceProperties {
 
     /**
      * Composes a 15-character symbol identification code (SIDC) for the
-     * Emergency Management coding scheme. 
+     * Emergency Management coding scheme.
      *
      * @return the MIL-STD-2525 15-character symbol identification code (SIDC)
      * corresponding to this SymbolCode, according to the Emergency Management

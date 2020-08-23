@@ -15,6 +15,7 @@
  */
 package com.phyzicsz.rocket.symbol.core;
 
+import com.phyzicsz.rocket.symbol.core.exception.UnsupportedMimeType;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -188,7 +189,7 @@ public class RocketSymbolServiceTest {
     }
 
     @Test
-    public void testFriendSymbology() throws IOException {
+    public void testFriendSymbology() throws IOException, UnsupportedMimeType {
         List<String> friend = Arrays.asList(
                 "SFPP------*****",
                 "SFPPS-----*****",
@@ -218,7 +219,7 @@ public class RocketSymbolServiceTest {
     }
 
     @Test
-    public void testHostileSymbology() throws IOException {
+    public void testHostileSymbology() throws IOException, UnsupportedMimeType {
         List<String> hostile = Arrays.asList(
                 "SHPP------*****",
                 "SHPPS-----*****",
@@ -248,7 +249,7 @@ public class RocketSymbolServiceTest {
     }
 
     @Test
-    public void testNeutralSymbology() throws IOException {
+    public void testNeutralSymbology() throws IOException, UnsupportedMimeType {
         List<String> neutral = Arrays.asList(
                 "SNPP------*****",
                 "SNPPS-----*****",
@@ -278,7 +279,7 @@ public class RocketSymbolServiceTest {
     }
 
     @Test
-    public void testUnknownSymbology() throws IOException {
+    public void testUnknownSymbology() throws IOException, UnsupportedMimeType {
         List<String> unknown = Arrays.asList(
                 "SUPP------*****",
                 "SUPPS-----*****",

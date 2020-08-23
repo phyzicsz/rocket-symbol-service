@@ -15,9 +15,10 @@
  */
 package com.phyzicsz.rocket.symbol.core.render;
 
+import com.phyzicsz.rocket.symbol.code.SymbolServiceProperties;
+import com.phyzicsz.rocket.symbol.core.exception.UnsupportedMimeType;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import com.phyzicsz.rocket.symbol.code.SymbolServiceProperties;
 
 /**
  * Render icons for symbols in a symbol set from a local disk or the network.
@@ -36,5 +37,5 @@ public interface SymbolRenderer {
      * @return A BufferedImage containing the requested icon, or null if failure.
      * @throws java.io.IOException
      */
-    BufferedImage createIcon(String symbolId, SymbolServiceProperties props) throws IOException;
+    BufferedImage createIcon(String symbolId, SymbolServiceProperties props) throws IOException, UnsupportedMimeType;
 }

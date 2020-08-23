@@ -15,9 +15,11 @@
  */
 package com.phyzicsz.rocket.symbol.core.render;
 
+import com.google.common.net.MediaType;
 import com.phyzicsz.rocket.symbol.code.SymbolCode;
 import com.phyzicsz.rocket.symbol.code.SymbolServiceProperties;
 import com.phyzicsz.rocket.symbol.code.SymbologyConstants;
+import com.phyzicsz.rocket.symbol.core.exception.UnsupportedMimeType;
 import com.phyzicsz.rocket.symbol.core.utils.ImageUtils;
 import com.phyzicsz.rocket.symbol.core.utils.MimeEncodingUtils;
 import java.awt.BasicStroke;
@@ -71,7 +73,7 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
 
     protected static final Color DEFAULT_FRAME_COLOR = Color.BLACK;
     protected static final Color DEFAULT_ICON_COLOR = Color.BLACK;
-    protected static final String DEFAULT_IMAGE_FORMAT = "image/png";
+    protected static final MediaType DEFAULT_IMAGE_FORMAT = MediaType.PNG;
 
     /**
      * Radius (in pixels) of circle that is drawn to the represent the symbol
@@ -83,7 +85,6 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
      */
     protected static final int CIRCLE_LINE_WIDTH = 2;
 
-   
     protected static final Map<String, String> schemePathMap = new HashMap<>();
     protected static final Map<String, Color> fillColorMap = new HashMap<>();
     protected static final Map<String, Color> frameColorMap = new HashMap<>();
@@ -92,7 +93,6 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
     protected static final Set<String> unframedIconMap = new HashSet<>();
     protected static final Set<String> emsEquipment = new HashSet<>();
 
-   
     public MilStdSymbolRenderer() {
 
     }
@@ -110,15 +110,15 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
      * @throws java.io.IOException
      */
     @Override
-    public BufferedImage createIcon(String sidc, SymbolServiceProperties params) throws IOException {
+    public BufferedImage createIcon(String sidc, SymbolServiceProperties params) throws IOException, UnsupportedMimeType {
         if (sidc == null) {
             logger.error("symbol code is null");
             throw new IllegalArgumentException("symbol code is null");
         }
 
         //replace all tactical customizations with standard markings...
-        sidc = sidc.replace('*','-');
-        
+        sidc = sidc.replace('*', '-');
+
         SymbolCode symbolCode = new SymbolCode(sidc);
         BufferedImage image = null;
 
@@ -144,31 +144,28 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
         if (image == null) {
             image = this.drawCircle(symbolCode, params, image);
         }
-        
+
         Integer size = this.imageSize(params);
-        if(Objects.equals(size, ServiceConstants.DEFAULT_IMAGE_SIZE)){
+        if (Objects.equals(size, ServiceConstants.DEFAULT_IMAGE_SIZE)) {
             return image;
+        } else {
+            return ImageUtils.resize(image, size);
         }
-        else{
-            return ImageUtils.resize(image,size);
-        }   
     }
-    
+
     protected Integer imageSize(SymbolServiceProperties params) {
-        
-        Object maybeSize = params.get(ServiceConstants.IMAGE_SIZE); 
-        if(null == maybeSize){
+
+        Object maybeSize = params.get(ServiceConstants.IMAGE_SIZE);
+        if (null == maybeSize) {
             return ServiceConstants.DEFAULT_IMAGE_SIZE;
-        }
-        else{
-            if(maybeSize instanceof Integer){
+        } else {
+            if (maybeSize instanceof Integer) {
                 return (Integer) maybeSize;
-            }
-            else{
+            } else {
                 return ServiceConstants.DEFAULT_IMAGE_SIZE;
             }
         }
-       
+
     }
 
     protected boolean mustDrawFill(SymbolCode symbolCode, SymbolServiceProperties params) {
@@ -196,21 +193,21 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
         return o == null || o.equals(Boolean.TRUE);
     }
 
-    protected BufferedImage drawFill(SymbolCode symbolCode, SymbolServiceProperties params, BufferedImage dest) {
+    protected BufferedImage drawFill(SymbolCode symbolCode, SymbolServiceProperties params, BufferedImage dest) throws UnsupportedMimeType {
         String path = this.composeFillPath(symbolCode);
         Color color = this.getFillColor(symbolCode, params);
 
         return path != null ? this.drawIconComponent(path, color, dest) : dest;
     }
 
-    protected BufferedImage drawFrame(SymbolCode symbolCode, SymbolServiceProperties params, BufferedImage dest) {
+    protected BufferedImage drawFrame(SymbolCode symbolCode, SymbolServiceProperties params, BufferedImage dest) throws UnsupportedMimeType {
         String path = this.composeFramePath(symbolCode);
         Color color = this.getFrameColor(symbolCode, params);
 
         return path != null ? this.drawIconComponent(path, color, dest) : dest;
     }
 
-    protected BufferedImage drawIcon(SymbolCode symbolCode, SymbolServiceProperties params, BufferedImage dest) throws IOException {
+    protected BufferedImage drawIcon(SymbolCode symbolCode, SymbolServiceProperties params, BufferedImage dest) throws IOException, UnsupportedMimeType {
         String path = this.composeIconPath(symbolCode, params);
         Color color = this.getIconColor(symbolCode, params);
 
@@ -274,31 +271,31 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
         return image;
     }
 
-    protected String composeFillPath(SymbolCode symbolCode) {
+    protected String composeFillPath(SymbolCode symbolCode) throws UnsupportedMimeType {
         String maskedCode = this.getMaskedFillCode(symbolCode);
 
         StringBuilder sb = new StringBuilder();
         sb.append(FILLS_PATH).append("/");
         sb.append(TACTICAL_SYMBOLS_PATH).append("/");
         sb.append(maskedCode.toLowerCase());
-        sb.append(MimeEncodingUtils.makeSuffixForMimeType(DEFAULT_IMAGE_FORMAT));
+        sb.append(MimeEncodingUtils.fileExtensionForMimeType(DEFAULT_IMAGE_FORMAT));
 
         return sb.toString();
     }
 
-    protected String composeFramePath(SymbolCode symbolCode) {
+    protected String composeFramePath(SymbolCode symbolCode) throws UnsupportedMimeType {
         String maskedCode = this.getMaskedFrameCode(symbolCode);
 
         StringBuilder sb = new StringBuilder();
         sb.append(FRAMES_PATH).append("/");
         sb.append(TACTICAL_SYMBOLS_PATH).append("/");
         sb.append(maskedCode.toLowerCase());
-        sb.append(MimeEncodingUtils.makeSuffixForMimeType(DEFAULT_IMAGE_FORMAT));
+        sb.append(MimeEncodingUtils.fileExtensionForMimeType(DEFAULT_IMAGE_FORMAT));
 
         return sb.toString();
     }
 
-    protected String composeIconPath(SymbolCode symbolCode, SymbolServiceProperties params) throws IOException {
+    protected String composeIconPath(SymbolCode symbolCode, SymbolServiceProperties params) throws IOException, UnsupportedMimeType {
         String scheme = symbolCode.getScheme();
         String bd = symbolCode.getBattleDimension();
 
@@ -308,7 +305,7 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
             sb.append(ICONS_PATH).append("/");
             sb.append(UNKNOWN_PATH).append("/");
             sb.append(maskedCode.toLowerCase());
-            sb.append(MimeEncodingUtils.makeSuffixForMimeType(DEFAULT_IMAGE_FORMAT));
+            sb.append(MimeEncodingUtils.fileExtensionForMimeType(DEFAULT_IMAGE_FORMAT));
             return sb.toString();
         } else {
             if (SymbolCode.isFieldEmpty(symbolCode.getFunctionId())) {
@@ -319,7 +316,7 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
             sb.append(ICONS_PATH).append("/");
             sb.append(schemePathMap.get(scheme.toLowerCase())).append("/");
             sb.append(maskedCode.toLowerCase());
-            sb.append(MimeEncodingUtils.makeSuffixForMimeType(DEFAULT_IMAGE_FORMAT));
+            sb.append(MimeEncodingUtils.fileExtensionForMimeType(DEFAULT_IMAGE_FORMAT));
             return sb.toString();
         }
     }
@@ -349,7 +346,7 @@ public class MilStdSymbolRenderer extends AbstractMilStdSymbolRenderer {
             Color color = this.getColorFromParams(params);
             return color != null ? color : fillColorMap.get(symbolCode.getStandardIdentity().toLowerCase());
         } else {
-           return iconColorMap.containsKey(maskedCode) ? iconColorMap.get(maskedCode) : DEFAULT_ICON_COLOR;
+            return iconColorMap.containsKey(maskedCode) ? iconColorMap.get(maskedCode) : DEFAULT_ICON_COLOR;
         }
     }
 

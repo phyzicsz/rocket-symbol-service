@@ -24,10 +24,10 @@ import org.junit.jupiter.api.Test;
  * @author phyzicsz <phyzics.z@gmail.com>
  */
 public class SymbolCodeTest {
-
+    
     public SymbolCodeTest() {
     }
-
+    
     @Test
     public void basicComposeTest() {
         SymbolCode symbol = new SymbolCode();
@@ -36,16 +36,16 @@ public class SymbolCodeTest {
         String sidc = symbol.toString();
         assertThat(sidc).isEqualTo("SH-------------");
     }
-
+    
     @Test
     public void nullTest() {
         String sidc = null;
-        assertThatThrownBy(() -> { 
+        assertThatThrownBy(() -> {            
             new SymbolCode(sidc);
-        }).isInstanceOf(IllegalArgumentException.class);
-
+        }).isInstanceOf(IllegalArgumentException.class); 
+        
     }
-
+    
     @Test
     public void invalidLengthTest() {
         String sidc = "SH";
@@ -53,7 +53,7 @@ public class SymbolCodeTest {
             new SymbolCode(sidc);
         }).isInstanceOf(IllegalArgumentException.class);
     }
-
+    
     @Test
     public void composeUnknownTest() {
         SymbolCode symbol = new SymbolCode();
@@ -63,24 +63,47 @@ public class SymbolCodeTest {
         assertThat(sidc).isNull();
     }
 
+//    @Test
+//    public void composeUnknownTestInvalid() {
+//        SymbolCode symbol = new SymbolCode();
+//        symbol.setScheme("Z");
+//        String sidc = symbol.toString();
+//        assertThat(sidc).contains("Z");
+//    }
+    
     @Test
-    public void composeWarfightingTest() {
+    public void composeWarfighterTest() {
         SymbolCode symbol = new SymbolCode();
-        symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_HOSTILE);
         symbol.setScheme(SymbologyConstants.SCHEME_WARFIGHTING);
+        symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
+        symbol.setBattleDimension(SymbologyConstants.BATTLE_DIMENSION_GROUND);
+        symbol.setStatus(SymbologyConstants.STATUS_PRESENT);
+        symbol.setCountryCode("US");
+        symbol.setOrderOfBattle(SymbologyConstants.ORDER_OF_BATTLE_AIR);
         String sidc = symbol.toString();
-        assertThat(sidc).isEqualTo("SH-------------");
+        assertThat(sidc).isEqualTo("SFGP--------USA");
+        
+        String unknown = symbol.parseSymCode(sidc);
+        assertThat(unknown).isNull();
     }
-
+    
     @Test
     public void composeStabilityOperationsTest() {
         SymbolCode symbol = new SymbolCode();
         symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_HOSTILE);
         symbol.setScheme(SymbologyConstants.SCHEME_STABILITY_OPERATIONS);
+        symbol.setStatus(SymbologyConstants.STATUS_PRESENT);
+        symbol.setCategory(SymbologyConstants.CATEGORY_VIOLENT_ACTIVITIES);
+        symbol.setSymbolModifier(SymbologyConstants.INSTALLATION_NORMAL);
+        symbol.setCountryCode("US");
+        symbol.setOrderOfBattle(SymbologyConstants.ORDER_OF_BATTLE_AIR);
         String sidc = symbol.toString();
-        assertThat(sidc).isEqualTo("OH-------------");
+        assertThat(sidc).isEqualTo("OHVP------H-USA");
+        
+        String unknown = symbol.parseSymCode(sidc);
+        assertThat(unknown).isNull();
     }
-
+    
     @Test
     public void composeIntelligeceTest() {
         SymbolCode symbol = new SymbolCode();
@@ -89,7 +112,7 @@ public class SymbolCodeTest {
         String sidc = symbol.toString();
         assertThat(sidc).isEqualTo("IH-------------");
     }
-
+    
     @Test
     public void composeEmergencyManagementTest() {
         SymbolCode symbol = new SymbolCode();
@@ -98,7 +121,7 @@ public class SymbolCodeTest {
         String sidc = symbol.toString();
         assertThat(sidc).isEqualTo("EH-------------");
     }
-
+    
     @Test
     public void composeMetocTest() {
         SymbolCode symbol = new SymbolCode();
@@ -107,7 +130,7 @@ public class SymbolCodeTest {
         String sidc = symbol.toString();
         assertThat(sidc).isEqualTo("W--------------");
     }
-
+    
     @Test
     public void composeTacticalGraphicsTest() {
         SymbolCode symbol = new SymbolCode();
@@ -116,14 +139,14 @@ public class SymbolCodeTest {
         String sidc = symbol.toString();
         assertThat(sidc).isEqualTo("GH-------------");
     }
-
+    
     @Test
     public void basicSymbolCodeParseTest() {
         String sidc = "SFUPSK---------";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -132,7 +155,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_WARFIGHTING);
         assertThat(identity).isEqualTo(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
         assertThat(battleDimension).isEqualTo(SymbologyConstants.BATTLE_DIMENSION_SEA_SUBSURFACE);
@@ -142,14 +165,14 @@ public class SymbolCodeTest {
         assertThat(staticDynamic).isNull();
         assertThat(graphicType).isNull();
     }
-
+    
     @Test
     public void parseUnknownTest() {
         String sidc = "ZH-------------";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNotNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -158,7 +181,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isNull();
         assertThat(identity).isNull();
         assertThat(battleDimension).isNull();
@@ -168,14 +191,14 @@ public class SymbolCodeTest {
         assertThat(staticDynamic).isNull();
         assertThat(graphicType).isNull();
     }
-
+    
     @Test
     public void emergencyMangementParseTest() {
         String sidc = "EFOPDG---------";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -184,7 +207,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_EMERGENCY_MANAGEMENT);
         assertThat(identity).isEqualTo(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
         assertThat(battleDimension).isNull();
@@ -194,14 +217,14 @@ public class SymbolCodeTest {
         assertThat(staticDynamic).isNull();
         assertThat(graphicType).isNull();
     }
-
+    
     @Test
     public void stabilityOperationsParseTest() {
         String sidc = "OFVPD----------";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -210,7 +233,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_STABILITY_OPERATIONS);
         assertThat(identity).isEqualTo(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
         assertThat(battleDimension).isNull();
@@ -220,14 +243,14 @@ public class SymbolCodeTest {
         assertThat(staticDynamic).isNull();
         assertThat(graphicType).isNull();
     }
-
+    
     @Test
     public void tacticalGraphicsParseTest() {
         String sidc = "GFGPGLB-------X";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -236,7 +259,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_TACTICAL_GRAPHICS);
         assertThat(identity).isEqualTo(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
         assertThat(battleDimension).isNull();
@@ -246,14 +269,14 @@ public class SymbolCodeTest {
         assertThat(staticDynamic).isNull();
         assertThat(graphicType).isNull();
     }
-
+    
     @Test
     public void intelligenceParseTest() {
         String sidc = "IFPPSCD--------";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -262,7 +285,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_INTELLIGENCE);
         assertThat(identity).isEqualTo(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
         assertThat(battleDimension).isEqualTo(SymbologyConstants.BATTLE_DIMENSION_SPACE);
@@ -272,14 +295,14 @@ public class SymbolCodeTest {
         assertThat(staticDynamic).isNull();
         assertThat(graphicType).isNull();
     }
-
+    
     @Test
     public void metocParseTest() {
         String sidc = "WOS-HPBA--P----";
         SymbolCode symbol = new SymbolCode();
         String unknownSymbols = symbol.parseSymCode(sidc);
         assertThat(unknownSymbols).isNull();
-
+        
         String scheme = symbol.getScheme();
         String identity = symbol.getStandardIdentity();
         String battleDimension = symbol.getBattleDimension();
@@ -288,7 +311,7 @@ public class SymbolCodeTest {
         String echelon = symbol.getEchelon();
         String staticDynamic = symbol.getStaticDynamic();
         String graphicType = symbol.getGraphicType();
-
+        
         assertThat(scheme).isEqualTo(SymbologyConstants.SCHEME_METOC);
         assertThat(identity).isNull();
         assertThat(battleDimension).isNull();
@@ -297,5 +320,108 @@ public class SymbolCodeTest {
         assertThat(echelon).isNull();
         assertThat(staticDynamic).isEqualTo("S-");
         assertThat(graphicType).isEqualTo("P--");
+    }
+    
+    @Test
+    public void inavlidSchemeTest() {
+        String sidc = "Z--------------";
+        SymbolCode symbol = new SymbolCode();
+        String unknownSymbols = symbol.parseSymCode(sidc);
+        assertThat(unknownSymbols).contains("Z");
+    }
+    
+    @Test
+    public void inavlidWarfighterTest() {
+        SymbolCode symbol = new SymbolCode();
+        symbol.setScheme(SymbologyConstants.SCHEME_WARFIGHTING);
+        symbol.setStandardIdentity("Z");
+        String sidc = symbol.toString();
+        
+        String unknownSymbols = symbol.parseSymCode(sidc);
+        assertThat(unknownSymbols).contains("Z");
+        
+        symbol.setScheme(SymbologyConstants.SCHEME_WARFIGHTING);
+        symbol.setSymbolModifier("XX");
+        sidc = symbol.toString();
+        unknownSymbols = symbol.parseSymCode(sidc);
+        assertThat(unknownSymbols).contains("X");
+        
+        symbol.setScheme(SymbologyConstants.SCHEME_WARFIGHTING);
+        symbol.setOrderOfBattle("A");
+        sidc = symbol.toString();
+        unknownSymbols = symbol.parseSymCode(sidc);
+        assertThat(unknownSymbols).contains("A");
+        
+        
+    }
+    
+    @Test
+    public void inavlidWarfighterOrderOfBattleTest() {
+        SymbolCode symbol = new SymbolCode();
+        symbol.setScheme(SymbologyConstants.SCHEME_WARFIGHTING);
+        symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
+        symbol.setBattleDimension(SymbologyConstants.BATTLE_DIMENSION_GROUND);
+        symbol.setStatus(SymbologyConstants.STATUS_PRESENT);
+        symbol.setSymbolModifier(SymbologyConstants.INSTALLATION_NORMAL);
+        symbol.setCountryCode("US");
+        symbol.setOrderOfBattle("X");
+        String sidc = symbol.toString();
+        assertThat(sidc).isEqualTo("SFGP------H-USX");
+        
+        String unknown = symbol.parseSymCode(sidc);
+        assertThat(unknown).contains("X");
+
+    }
+    
+    @Test
+    public void invalidEmergencyMangementTestIdentity() {
+        SymbolCode symbol = new SymbolCode();
+        symbol.setScheme(SymbologyConstants.SCHEME_EMERGENCY_MANAGEMENT);
+        symbol.setStandardIdentity("Z");
+        symbol.setBattleDimension(SymbologyConstants.BATTLE_DIMENSION_GROUND);
+        symbol.setStatus(SymbologyConstants.STATUS_PRESENT);
+        symbol.setSymbolModifier(SymbologyConstants.INSTALLATION_NORMAL);
+        symbol.setCountryCode("US");
+        symbol.setOrderOfBattle("X");
+        String sidc = symbol.toString();
+        assertThat(sidc).isEqualTo("EZ-P------H-USX");
+        
+        String unknown = symbol.parseSymCode(sidc);
+        assertThat(unknown).contains("Z");
+    }
+    
+    @Test
+    public void invalidEmergencyMangementTestStatus() {
+        SymbolCode symbol = new SymbolCode();
+        symbol.setScheme(SymbologyConstants.SCHEME_EMERGENCY_MANAGEMENT);
+        symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
+        symbol.setBattleDimension(SymbologyConstants.BATTLE_DIMENSION_GROUND);
+        symbol.setStatus("Z");
+        symbol.setSymbolModifier(SymbologyConstants.INSTALLATION_NORMAL);
+        symbol.setCountryCode("US");
+        symbol.setOrderOfBattle("X");
+        String sidc = symbol.toString();
+        assertThat(sidc).isEqualTo("EF-Z------H-USX");
+        
+        String unknown = symbol.parseSymCode(sidc);
+        assertThat(unknown).contains("Z");
+    }
+    
+    @Test
+    public void invalidEmergencyMangementTestModifier() {
+        SymbolCode symbol = new SymbolCode();
+        symbol.setScheme(SymbologyConstants.SCHEME_EMERGENCY_MANAGEMENT);
+        symbol.setStandardIdentity(SymbologyConstants.STANDARD_IDENTITY_FRIEND);
+        symbol.setBattleDimension(SymbologyConstants.BATTLE_DIMENSION_GROUND);
+        symbol.setStatus(SymbologyConstants.STATUS_PRESENT);
+        symbol.setSymbolModifier(SymbologyConstants.INSTALLATION_NORMAL);
+        symbol.setCountryCode("US");
+        symbol.setSymbolModifier("ZZ");
+        symbol.setOrderOfBattle(SymbologyConstants.ORDER_OF_BATTLE_AIR);
+        String sidc = symbol.toString();
+        assertThat(sidc).isEqualTo("EF-P------ZZUSA");
+        
+        String unknown = symbol.parseSymCode(sidc);
+        assertThat(unknown).contains("Z");
     }
 }
